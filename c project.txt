@@ -1,0 +1,116 @@
+
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_CROPS 100
+
+struct Crop {
+    char cropName[50];
+    char fieldName[50];
+    float area;
+};
+
+struct Crop crops[MAX_CROPS];
+int count = 0;
+
+// Function to add a crop
+void addCrop() {
+    if (count >= MAX_CROPS) {
+        printf("\nCrop storage is full!\n");
+        return;
+    }
+
+    printf("\nEnter Crop Name: ");
+    scanf(" %[^\n]", crops[count].cropName);
+
+    printf("Enter Field Name: ");
+    scanf(" %[^\n]", crops[count].fieldName);
+
+    printf("Enter Area (in acres): ");
+    scanf("%f", &crops[count].area);
+
+    count++;
+
+    printf("\nCrop added successfully!\n");
+}
+
+// Function to display all crops
+void viewAllCrops() {
+    int i;
+
+    if (count == 0) {
+        printf("\nNo crop records found!\n");
+        return;
+    }
+
+    printf("\n========== ALL CROP RECORDS ==========\n");
+
+    for (i = 0; i < count; i++) {
+        printf("\nSerial Number: %d", i + 1);
+        printf("\nCrop Name: %s", crops[i].cropName);
+        printf("\nField Name: %s", crops[i].fieldName);
+        printf("\nArea: %.2f acres\n", crops[i].area);
+    }
+}
+
+// Function to search crop by serial number
+void viewCropByNumber() {
+    int number;
+
+    printf("\nEnter Serial Number: ");
+    scanf("%d", &number);
+
+    if (number < 1 || number > count) {
+        printf("\nInvalid Serial Number!\n");
+        return;
+    }
+
+    printf("\n========== CROP DETAILS ==========\n");
+    printf("\nSerial Number: %d", number);
+    printf("\nCrop Name: %s", crops[number - 1].cropName);
+    printf("\nField Name: %s", crops[number - 1].fieldName);
+    printf("\nArea: %.2f acres\n", crops[number - 1].area);
+}
+
+// Main function
+int main() {
+    int choice;
+
+    do {
+        printf("\n\n====================================");
+        printf("\n       FARMTRACK MANAGEMENT");
+        printf("\n====================================");
+        printf("\n1. Add Crop");
+        printf("\n2. View All Crops");
+        printf("\n3. View Crop By Serial Number");
+        printf("\n4. Exit");
+        printf("\n====================================");
+
+        printf("\nEnter Your Choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                addCrop();
+                break;
+
+            case 2:
+                viewAllCrops();
+                break;
+
+            case 3:
+                viewCropByNumber();
+                break;
+
+            case 4:
+                printf("\nThank you for using FarmTrack!\n");
+                break;
+
+            default:
+                printf("\nInvalid Choice! Please try again.\n");
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
